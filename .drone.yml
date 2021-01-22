@@ -1,0 +1,39 @@
+kind: pipeline
+name: Mystic Kernel
+
+clone:
+  depth: 1
+
+steps:
+- name: Building
+  image: okta10/docker:latest
+  environment: 
+    TELEGRAM_TOKEN:
+      from_secret: TELEGRAM_TOKEN
+    CHANNEL_ID:
+      from_secret: CHANNEL_ID
+  commands:
+  - "wget https://raw.githubusercontent.com/okta-10/scripts/main/docker/kernel/doStart"
+  - "wget https://raw.githubusercontent.com/okta-10/scripts/main/docker/kernel/doBuild-Beta"
+  - "wget https://raw.githubusercontent.com/okta-10/scripts/main/docker/kernel/doPush"
+  - bash doStart
+  - bash doBuild-Beta --whyredoldcam
+  - bash doBuild-Beta --whyrednewcam
+  - bash doBuild-Beta --tulipoldcam
+  - bash doBuild-Beta --tulipnewcam
+  - bash doBuild-Beta --lavenderoldcam  
+  - bash doBuild-Beta --lavendernewcam
+  - bash doBuild-Beta --a26xoldcam
+  - bash doBuild-Beta --a26xnewcam
+  # - bash doBuild-Beta --a26xtencam
+
+  # - git apply oc.patch
+  # - bash doBuild-Beta --ocwhyredold  
+  # - bash doBuild-Beta --ocwhyrednew
+  # - bash doBuild-Beta --octulipold
+  # - bash doBuild-Beta --octulipnew
+
+  # - git apply msm.patch
+  # - bash doBuild-Beta --msmtulipold
+  # - bash doBuild-Beta --msmtulipold
+  - bash doPush
